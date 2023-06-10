@@ -1,0 +1,26 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+}
+
+#messages li {
+  margin-bottom: 5px;
+}
+
+#chat-form {
+  display: flex;
+  margin-top: 10px;
+}
+
+#message-input {
+  flex-grow: 1;
+  padding: 5px;
+}
+
+#chat-form button {
+  padding: 5px 10px;
+}
