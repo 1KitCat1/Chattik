@@ -2,10 +2,31 @@ const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const auth = require('./auth');
+const session = require('express-session');
+
+app.use(session({
+  secret: 'some-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+
+app.get('/', (req, res) => {
+  if (!req.session.user) {
+    res.redirect('/login');
+    return;
+  }
+  res.sendFile(__dirname + '/static/index.html');
+});
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/static/index.html');
 });
+
+app.get('/login', auth.login);
+
+app.get('/logout', auth.logout);
 
 io.on('connection', (socket) => {
   console.log('A user connected');
