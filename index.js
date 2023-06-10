@@ -13,6 +13,7 @@ app.use(session({
 
 const chatHistory = [];
 
+
 app.get('/', (req, res) => {
   if (!req.session.user) {
     res.redirect('/login');
@@ -24,6 +25,15 @@ app.get('/', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/static/index.html');
 });
+
+app.get('/username', (req, res) => {
+  console.log("Username query: " + req.session.user.username)
+  if (req.session.user && req.session.user.username) {
+    res.json({ username: req.session.user.username });
+  } else {
+    res.status(401).json({ error: 'User not authenticated' });
+  }
+})
 
 app.get('/login', auth.login);
 
@@ -43,6 +53,10 @@ io.on('connection', (socket) => {
     chatHistory.push(msg);
     io.emit('chat message', msg);
   });
+
+  socket.on('getusername', () => {
+    console.log("Get username request: ", session.user.username);
+  })
 });
 
 const port = 3000;
