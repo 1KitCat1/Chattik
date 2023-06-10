@@ -76,6 +76,15 @@
       li.classList.add('list-group-item');
       messages.appendChild(li);
     });
+
+    socket.on('chat history', (history) => {
+      history.forEach((msg) => {
+        const li = document.createElement('li');
+        li.textContent = `${msg}`;
+        messages.appendChild(li);
+      });
+    });
+
   </script>
 </body>
 </html>

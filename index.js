@@ -11,6 +11,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+const chatHistory = [];
 
 app.get('/', (req, res) => {
   if (!req.session.user) {
@@ -31,12 +32,15 @@ app.get('/logout', auth.logout);
 io.on('connection', (socket) => {
   console.log('A user connected');
   
+  socket.emit('chat history', chatHistory);
+
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
   
   socket.on('chat message', (msg) => {
     console.log('Received message:', msg);
+    chatHistory.push(msg);
     io.emit('chat message', msg);
   });
 });
