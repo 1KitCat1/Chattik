@@ -7,9 +7,9 @@ const users = [
   const auth = {
     login(req, res) {
       const { username, password } = req.query;
-
+      
       if (!username || !password) {
-        res.status(400).send('Invalid username or password');
+        res.sendFile(__dirname + '/static/login.html');
         return;
       }
   
