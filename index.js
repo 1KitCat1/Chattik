@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const port = 3000; // You can change this to any port you prefer
+const port = 3000;
 http.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
